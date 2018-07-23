@@ -32,7 +32,7 @@ float flat, flon;
 unsigned long age, date, time, chars = 0;
 unsigned short sentences = 0, failed = 0;
 char sz[32];
-String temp;
+char temp[100];
 
 void setup() {
   rtc.begin();
@@ -60,8 +60,10 @@ void loop() {
   dataString="";
   // put your main code here, to run repeatedly:
 dt=rtc.getDateTime();
+dataString= String(dt.hour)+":"+String(dt.minute)+":"+String(dt.second)+"  "+
+            String(dt.day)+"-"+String(dt.month)+"-"+String(dt.year)+" ";
  print_int(gps.satellites(), TinyGPS::GPS_INVALID_SATELLITES, 5);
-dataString=temp+" ";
+dataString=dataString+temp+" ";
 gps.f_get_position(&flat, &flon, &age);
 print_float(flat, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
 dataString=dataString+temp+" ";
@@ -101,7 +103,7 @@ static void print_int(unsigned long val, unsigned long invalid, int len)
     sz[i] = ' ';
   if (len > 0) 
     sz[len-1] = ' ';
-  temp=String(sz);
+    strcpy(temp,sz);
   smartdelay(0);
 }
 static void print_float(float val, float invalid, int len, int prec)
@@ -117,8 +119,8 @@ static void print_float(float val, float invalid, int len, int prec)
     int vi = abs((int)val);
     int flen = prec + (val < 0.0 ? 2 : 1); // . and -
     flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
-    for (int i=flen; i<len; ++i)
-    temp=temp+" ";
+    //for (int i=flen; i<len; ++i)
+    //temp=temp+" ";
   }
   smartdelay(0);
 }

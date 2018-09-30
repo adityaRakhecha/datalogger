@@ -1,3 +1,4 @@
+// include necessary header files
 #include <Wire.h>
 #include <DS1307.h> //rtc library
 #include <SPI.h>
@@ -28,6 +29,7 @@ static void print_float(float val, float invalid, int len, int prec);
 static void print_int(unsigned long val, unsigned long invalid, int len);
 static void print_date(TinyGPS &gps);
 static void print_str(const char *str, int len);
+
 float flat, flon;
 unsigned long age, date, time, chars = 0;
 unsigned short sentences = 0, failed = 0;
@@ -73,15 +75,8 @@ print_int(age, TinyGPS::GPS_INVALID_AGE, 5);
 dataString=dataString+temp+" ";
 print_float(gps.f_speed_kmph(), TinyGPS::GPS_INVALID_F_SPEED, 6, 2);
 dataString=dataString+temp+" ";
-
-
-
-
-
-
-
-
 }
+
 static void smartdelay(unsigned long ms)
 {
   unsigned long start = millis();
@@ -106,6 +101,7 @@ static void print_int(unsigned long val, unsigned long invalid, int len)
     strcpy(temp,sz);
   smartdelay(0);
 }
+
 static void print_float(float val, float invalid, int len, int prec)
 {
   if (val == invalid)
